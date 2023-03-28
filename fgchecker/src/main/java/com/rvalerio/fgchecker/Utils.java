@@ -92,6 +92,7 @@ public class Utils {
         return packageName;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public static String getTopProcessPackageName(Context context) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
             /** 在2022/06/22该段代码已弃用

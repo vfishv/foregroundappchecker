@@ -55,6 +55,7 @@ public class LollipopDetector implements Detector {
         }
         */
 
+        /*
         UsageEvents usageEvents = mUsageStatsManager.queryEvents(time - 1000 * 3600, time);
         UsageEvents.Event event = new UsageEvents.Event();
         while (usageEvents.hasNextEvent()) {
@@ -70,10 +71,8 @@ public class LollipopDetector implements Detector {
                 //Log.i(TAG, "getForegroundApp: " + foregroundApp);
             }
         }
-        if (foregroundApp == null) {
-            foregroundApp = Utils.getTopProcessPackageName(context);
-            Log.i(TAG, "getTopProcessPackageName: " + foregroundApp);
-        }
+        */
+        foregroundApp = Utils.getTopProcessPackageName(context);
         //Log.i(TAG, "foregroundApp: " + foregroundApp);
         return foregroundApp ;
     }
