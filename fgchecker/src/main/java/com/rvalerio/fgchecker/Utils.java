@@ -10,8 +10,8 @@ public class Utils {
 
     }
 
-    public static boolean postLollipop() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+    public static boolean postLollipopMR1() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1;
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)

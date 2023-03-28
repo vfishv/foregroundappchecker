@@ -122,7 +122,7 @@ public class ForegroundToastService extends Service {
                 .setContentIntent(PendingIntent.getBroadcast(this, 0, new Intent(STOP_SERVICE), PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT))
                 .setWhen(0)
                 .build();
-        manager.notify(NOTIFICATION_ID, notification);
+        //manager.notify(NOTIFICATION_ID, notification);
         startForeground(NOTIFICATION_ID, notification);
         return notification;
     }
