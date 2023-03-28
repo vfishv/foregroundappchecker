@@ -70,6 +70,11 @@ public class ForegroundToastService extends Service {
                 .whenOther(new AppChecker.Listener() {
                     @Override
                     public void onForeground(String packageName) {
+                        if (packageName != null && notificationBuilder != null) {
+                            //notificationBuilder.setSubText(packageName);
+                            notificationBuilder.setContentText(getString(R.string.app_name) + "  " + packageName);
+                            startForeground(NOTIFICATION_ID, notificationBuilder.build());
+                        }
                         Toast.makeText(getBaseContext(), "Foreground: " + packageName, Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -110,18 +115,20 @@ public class ForegroundToastService extends Service {
         }
     }
 
+    NotificationCompat.Builder notificationBuilder = null;
     private Notification createStickyNotification() {
         NotificationManager manager = ((NotificationManager) getSystemService(NOTIFICATION_SERVICE));
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_DEFAULT_ID)
+        PendingIntent stopPendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(STOP_SERVICE), PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_DEFAULT_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setOngoing(true)
                 .setOnlyAlertOnce(true)
                 .setAutoCancel(false)
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(getString(R.string.stop_service))
-                .setContentIntent(PendingIntent.getBroadcast(this, 0, new Intent(STOP_SERVICE), PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT))
-                .setWhen(0)
-                .build();
+                .setContentIntent(stopPendingIntent)
+                .setWhen(0);
+        Notification notification = notificationBuilder.build();
         //manager.notify(NOTIFICATION_ID, notification);
         startForeground(NOTIFICATION_ID, notification);
         return notification;
