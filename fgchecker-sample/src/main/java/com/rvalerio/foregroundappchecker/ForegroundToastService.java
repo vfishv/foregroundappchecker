@@ -123,6 +123,7 @@ public class ForegroundToastService extends Service {
                 .setWhen(0)
                 .build();
         manager.notify(NOTIFICATION_ID, notification);
+        startForeground(NOTIFICATION_ID, notification);
         return notification;
     }
 
