@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.rvalerio.fgchecker.Utils;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView tvPermission;
@@ -51,12 +53,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean needsUsageStatsPermission() {
-        return postLollipop() && !hasUsageStatsPermission(this);
+        return postLollipop() && !Utils.canUsageStats(this);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void requestUsageStatsPermission() {
-        if(!hasUsageStatsPermission(this)) {
+        if(!Utils.canUsageStats(this)) {
             startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
         }
     }
@@ -65,12 +67,5 @@ public class MainActivity extends AppCompatActivity {
         return android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    private boolean hasUsageStatsPermission(Context context) {
-        AppOpsManager appOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
-        int mode = appOps.checkOpNoThrow("android:get_usage_stats",
-                android.os.Process.myUid(), context.getPackageName());
-        boolean granted = mode == AppOpsManager.MODE_ALLOWED;
-        return granted;
-    }
 }
+

@@ -22,7 +22,7 @@ public class LollipopDetector implements Detector {
     private static final String TAG = "LollipopDetector";
     @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
     public String getForegroundApp(final Context context) {
-        if (!Utils.hasUsageStatsPermission(context))
+        if (!Utils.canUsageStats(context))
         {
             Log.e(TAG, "hasUsageStatsPermission: " + false);
             return null;
@@ -38,6 +38,7 @@ public class LollipopDetector implements Detector {
         }
         long time = System.currentTimeMillis();
 
+        /*
         List<UsageStats> appList = mUsageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,  time - 1000*1000, time);
         if (appList != null && appList.size() > 0) {
             SortedMap<Long, UsageStats> mySortedMap = new TreeMap<Long, UsageStats>();
@@ -52,6 +53,7 @@ public class LollipopDetector implements Detector {
                 }
             }
         }
+        */
 
         UsageEvents usageEvents = mUsageStatsManager.queryEvents(time - 1000 * 3600, time);
         UsageEvents.Event event = new UsageEvents.Event();
@@ -59,16 +61,20 @@ public class LollipopDetector implements Detector {
             usageEvents.getNextEvent(event);
             if(event.getEventType() == UsageEvents.Event.MOVE_TO_FOREGROUND) {
                 foregroundApp = event.getPackageName();
-                Log.w(TAG, "getForegroundApp: " + foregroundApp);
+                //Log.w(TAG, "getForegroundApp: " + foregroundApp);
             }
             else if(event.getEventType() == UsageEvents.Event.ACTIVITY_RESUMED) {
                 foregroundApp = event.getPackageName();
-                Log.e(TAG, "getForegroundApp: " + foregroundApp);
+                //Log.e(TAG, "getForegroundApp: " + foregroundApp);
             } else {
-                Log.i(TAG, "getForegroundApp: " + foregroundApp);
+                //Log.i(TAG, "getForegroundApp: " + foregroundApp);
             }
         }
-        Log.i(TAG, "foregroundApp: " + foregroundApp);
+        if (foregroundApp == null) {
+            foregroundApp = Utils.getTopProcessPackageName(context);
+            Log.i(TAG, "getTopProcessPackageName: " + foregroundApp);
+        }
+        //Log.i(TAG, "foregroundApp: " + foregroundApp);
         return foregroundApp ;
     }
 }
