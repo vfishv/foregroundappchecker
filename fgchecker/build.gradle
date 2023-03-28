@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+//apply plugin: 'com.novoda.bintray-release'
 
+/*
 ext {
     PUBLISH_GROUP_ID = 'com.rvalerio'
     PUBLISH_ARTIFACT_ID = 'fgchecker'
@@ -16,10 +17,11 @@ publish {
     uploadName = 'foregroundappchecker'
     website = 'https://github.com/ricvalerio/foregroundappchecker.git'
 }
+*/
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.1'
+    compileSdkVersion 33
+    //buildToolsVersion '33.0.0'
 
     defaultConfig {
         minSdkVersion 14
@@ -27,7 +29,7 @@ android {
         versionCode 1
         versionName "1.1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
     }
     buildTypes {
@@ -39,12 +41,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.0.1'
-    testCompile 'junit:junit:4.12'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    testImplementation 'junit:junit:4.13.2'
 }
 
-apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
+//apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
+

@@ -9,8 +9,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.support.v7.app.NotificationCompat;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+
 import android.widget.Toast;
 
 import com.rvalerio.fgchecker.AppChecker;
